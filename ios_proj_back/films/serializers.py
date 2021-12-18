@@ -19,7 +19,12 @@ class GenresSerializer(serializers.ModelSerializer):
         fields = ['id', 'title_ru', 'title_eng']
 
 class FilmGeneralSerializer(serializers.ModelSerializer):
-    # genres = GenresSerializer(many=True)
+    genres = GenresSerializer(many=True, read_only=True)
+    class Meta:
+        model = Film
+        exclude = ['created_at', 'updated_at']
+
+class FilmCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Film
         exclude = ['created_at', 'updated_at']

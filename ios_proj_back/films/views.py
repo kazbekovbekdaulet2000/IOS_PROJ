@@ -1,12 +1,13 @@
 from django.shortcuts import render
-from rest_framework import generics, permissions, pagination
+from rest_framework import generics, permissions, pagination, status
 
 from rest_framework import filters
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from films.models import Film, Genres, Posters, Trailer
-from films.serializers import FilmGeneralSerializer, FilmPosterSerializer, FilmTrailerSerializer, GenresSerializer
+from films.serializers import FilmCreateSerializer, FilmGeneralSerializer, FilmPosterSerializer, FilmTrailerSerializer, GenresSerializer
+
 # Create your views here.
 
 
@@ -18,6 +19,14 @@ class FilmList(generics.ListCreateAPIView):
                        DjangoFilterBackend, filters.OrderingFilter]
     search_fields = ['name']
     filterset_fields = ['start_date']
+
+    def create(self, request, *args, **kwargs):
+        serializer = FilmCreateSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
 
 
 # , FilmDetail, FilmPoster, FilmTrailer
