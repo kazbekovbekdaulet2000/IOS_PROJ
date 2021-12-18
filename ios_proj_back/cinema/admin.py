@@ -1,3 +1,9 @@
 from django.contrib import admin
 
-# Register your models here.
+from cinema.models import Cinema, City
+
+# 
+
+
+admin.site.register(City)
+admin.site.register(Cinema)

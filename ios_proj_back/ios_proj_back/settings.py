@@ -39,21 +39,27 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'user',
+    'cinema',
+    'ticket',
+    'films',
 
 
+    'debug_toolbar',
     'psycopg2',
     'drf_yasg',
     'rest_framework',
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
-    'rest_framework_swagger',  
-
+    'rest_framework_swagger',
+    
     'corsheaders',
     'django_filters',
 ]
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -63,10 +69,10 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-REST_FRAMEWORK = { 
+REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 20,
+    'PAGE_SIZE': 10,
 
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     
@@ -112,7 +118,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
-            'libraries': {  
+            'libraries': {
                 'staticfiles': 'django.templatetags.static',
             },
         },
@@ -130,7 +136,7 @@ DATABASES = {
         'ENGINE': "django.db.backends.postgresql_psycopg2",
         "NAME": os.environ.get("SQL_DATABASE", "ios_proj"),
         "USER": os.environ.get("SQL_USER", "k_bekdaulet"),
-        "PASSWORD": os.environ.get("SQL_PASSWORD", "Kazbekovv15122000"),
+        "PASSWORD": os.environ.get("SQL_PASSWORD", ""),
         "HOST": os.environ.get("SQL_HOST", "localhost"),
         "PORT": os.environ.get("SQL_PORT", "5432"),
     }
@@ -180,5 +186,14 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-MEDIA_ROOT = os.path.join(BASE_DIR,'media/')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 MEDIA_URL = '/media/'
+
+CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ALLOWED_ORIGINS = [
+#     'http://localhost:3000',
+# ]
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+]

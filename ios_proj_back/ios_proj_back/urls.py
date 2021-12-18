@@ -34,6 +34,9 @@ schema_view = get_schema_view(
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('user.urls')),
+    path('cinema/', include('cinema.urls')),
+    path('films/', include('films.urls')),
     # Swagger
-    path('', schema_view.with_ui('swagger', cache_timeout=0)),
+    path('api/', schema_view.with_ui('swagger', cache_timeout=0)),
+    path('__debug__/', include('debug_toolbar.urls')),
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
