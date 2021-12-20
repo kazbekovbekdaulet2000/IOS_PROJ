@@ -275,9 +275,25 @@ for i in range(len(cities)):
         'https://api.kino.kz/catalog/v1/cinemas', headers=headers, params=params)
 
     data = response.json()
-    print(data['result'][0]['name'])
+
+    city_data = {
+        "name": cities[i]['name'],
+        "name_lat": cities[i]['name_lat'],
+        "time_zone": cities[i]['time_zone'],
+        "latitude": cities[i]['latitude'],
+        "longitude": cities[i]['longitude'],
+        "order": cities[i]['order']
+    }
+
+    response = requests.post('http://23.111.122.219:8000/cinema/cities/', data=city_data)
+    
+    # print(data['result'][0]['name'])
+    city_id = response.json()
+
+    print(city_id['name'])
+
     for res in data['result']:
-        print("cinema", cities[i]['name'], res['name'] )
+        print("--------> ", cities[i]['name'], res['name'] )
         
         try: 
             soup = BS(res['description'], 'lxml')
@@ -294,10 +310,10 @@ for i in range(len(cities)):
             "longitude": res['longitude'],
             "latitude": res['latitude'],
             "phone": res['phone'],
-            "city": i+2
+            "city": city_id['id']
         }
 
-        response = requests.post('http://localhost:8000/cinema/', req_data)
+        response = requests.post('http://23.111.122.219:8000/cinema/', data=req_data)
 
 # address: "Самал-2, д. 111, уг.ул. Жолдасбекова, ТРЦ «Достык Плаза», "
 # # big_poster: "https://cdn.kino.kz/cinema/119/p1000x1000.jpg"

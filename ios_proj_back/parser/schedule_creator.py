@@ -395,7 +395,7 @@ counter = 0
 
 cinema_id = 138
 
-hall_id = 6
+hall_id = 1
 
 for i in range(len(schedule)):
     row_no = i+1
@@ -404,7 +404,7 @@ for i in range(len(schedule)):
         "hall": hall_id
     }
     responce = requests.post(
-        f'http://localhost:8000/cinema/{cinema_id}/halls/{hall_id}/', data=row_data)
+        f'http://23.111.122.219:8000/cinema/{cinema_id}/halls/{hall_id}/', data=row_data)
     row_id = responce.json()['id']
     for j in range(len(schedule[i])):
         empty=False
@@ -417,13 +417,13 @@ for i in range(len(schedule)):
             "number": counter,
             "symbol": "",
             "picked": False,
-            "price_reg": 1000,
-            "price_stud": 700,
+            "price_reg": 2400,
+            "price_stud": 1960,
             "empty": empty,
             "row": row_id
         }
 
         responce = requests.post(
-            f'http://localhost:8000/cinema/{cinema_id}/halls/{hall_id}/rows/', data=seat_data)
+            f'http://23.111.122.219:8000/cinema/{cinema_id}/halls/{hall_id}/rows/', data=seat_data)
 
         print(responce.json())

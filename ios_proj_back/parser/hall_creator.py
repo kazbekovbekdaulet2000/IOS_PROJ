@@ -26,13 +26,14 @@ halls = response.json()['pageProps']['cinema']['halls']
 
 number = 1
 
-cinema_id = 138
+cinema_id = 11
 
 for hall in halls:
     hall_data = {
         "hall_no": number,
         "vip": False,
-        "cinema": 138
+        "cinema": cinema_id
     }
     print(hall['name'])
-    requests.post(f'http://localhost:8000/cinema/{138}/halls/', data=hall_data)
+    requests.post(f'http://23.111.122.219:8000/cinema/{cinema_id}/halls/', data=hall_data)
+    number+=1
