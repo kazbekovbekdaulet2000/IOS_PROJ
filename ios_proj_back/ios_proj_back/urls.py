@@ -36,6 +36,7 @@ urlpatterns = [
     path('auth/', include('user.urls')),
     path('cinema/', include('cinema.urls')),
     path('films/', include('films.urls')),
+    path('reservation/', include('order.urls')),
     # Swagger
     path('api/', schema_view.with_ui('swagger', cache_timeout=0)),
     path('__debug__/', include('debug_toolbar.urls')),

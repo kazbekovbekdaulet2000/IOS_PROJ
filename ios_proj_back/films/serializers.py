@@ -1,6 +1,7 @@
 from rest_framework import serializers
+from cinema.serializers import CinemaSerializer
 from films.models import Actor, County, Director, Film, Genres, Trailer
-
+from ticket.models import Session
 
 class FilmTrailerSerializer(serializers.ModelSerializer):
     class Meta:
@@ -27,6 +28,13 @@ class GenresSerializer(serializers.ModelSerializer):
         model = Genres
         fields = ['id', 'title_ru', 'title_eng']
 
+class CinemaSessionsSerializer(serializers.ModelSerializer):
+    cinema = CinemaSerializer()
+    class Meta:
+        model = Session
+        fields = "__all__"
+
+
 class FilmGeneralSerializer(serializers.ModelSerializer):
     genres = GenresSerializer(many=True, read_only=True)
     trailers = FilmTrailerSerializer(many=True, read_only=True)
@@ -36,6 +44,19 @@ class FilmGeneralSerializer(serializers.ModelSerializer):
     class Meta:
         model = Film
         exclude = ['created_at', 'updated_at']
+
+
+class FilmDetailSerializer(serializers.ModelSerializer):
+    genres = GenresSerializer(many=True, read_only=True)
+    trailers = FilmTrailerSerializer(many=True, read_only=True)
+    actors = ActorSerializer(many=True)
+    directors = DirectorSerializer(many=True) 
+    countries = CountrySerializer(many=True)
+    sessions = CinemaSessionsSerializer(many=True)
+    class Meta:
+        model = Film
+        exclude = ['created_at', 'updated_at']
+
 
 class FilmCreateSerializer(serializers.ModelSerializer):
     class Meta:

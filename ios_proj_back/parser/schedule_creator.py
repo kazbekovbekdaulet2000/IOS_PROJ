@@ -393,7 +393,7 @@ schedule = [
 
 counter = 0
 
-cinema_id = 138
+cinema_id = 11
 
 hall_id = 1
 
@@ -404,7 +404,7 @@ for i in range(len(schedule)):
         "hall": hall_id
     }
     responce = requests.post(
-        f'http://23.111.122.219:8000/cinema/{cinema_id}/halls/{hall_id}/', data=row_data)
+        f'http://localhost:8000/cinema/{cinema_id}/halls/{hall_id}/', data=row_data)
     row_id = responce.json()['id']
     for j in range(len(schedule[i])):
         empty=False
@@ -424,6 +424,6 @@ for i in range(len(schedule)):
         }
 
         responce = requests.post(
-            f'http://23.111.122.219:8000/cinema/{cinema_id}/halls/{hall_id}/rows/', data=seat_data)
+            f'http://localhost:8000/cinema/{cinema_id}/halls/{hall_id}/rows/', data=seat_data)
 
         print(responce.json())

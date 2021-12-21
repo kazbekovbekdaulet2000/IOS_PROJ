@@ -1,11 +1,11 @@
-from rest_framework.response import Response
-
+from datetime import datetime, timedelta
+from re import S
 from cinema.models import Cinema
-from .models import Row, Seat, Hall
+from .models import Row, Seat, Hall, Session
 from . import serializers
 from rest_framework import generics, status
 from rest_framework import permissions
-from rest_framework import pagination
+from django.shortcuts import get_object_or_404
 
 
 class HallsView(generics.ListCreateAPIView):
@@ -31,15 +31,16 @@ class HallView(generics.ListCreateAPIView):
         }
 
     def get_queryset(self):
+        session = get_object_or_404(Session, id=self.kwargs['session_id'])
         for i in Hall.objects.filter(cinema_id=self.kwargs['cinema_id']):
-            if int(i.hall_no) == int(self.kwargs['hall_no']):
+            if int(i.hall_no) == int(session.hall.id):
                 return Row.objects.filter(hall_id=i.id)
         return {}
 
 
 class SeatsView(generics.ListCreateAPIView):
     serializer_class = serializers.SeatSerializer
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     pagination_class = None
 
     def get_queryset(self):
@@ -51,3 +52,13 @@ class SeatsView(generics.ListCreateAPIView):
                         list.append(seat)
                 return list
         return {}
+
+
+class SessionsView(generics.ListAPIView):
+    serializer_class = serializers.SessionsSerializer
+    permission_classes = [permissions.AllowAny]
+    pagination_class = None
+
+    def get_queryset(self):
+        now_date = datetime.now()+timedelta(hours=6)
+        return Session.objects.filter(cinema_id=self.kwargs['cinema_id'], time__gte=now_date)

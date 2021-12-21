@@ -1,7 +1,6 @@
-from django.db.models import fields
 from rest_framework import serializers
-from .models import Hall, Row, Seat
-
+from .models import Hall, Row, Seat, Session
+from films.serializers import FilmGeneralSerializer
 
 class SeatSerializer(serializers.ModelSerializer):
     class Meta:
@@ -53,3 +52,11 @@ class BaseHallSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         return super().create(validated_data)
+
+
+class SessionsSerializer(serializers.ModelSerializer):
+    hall = BaseHallSerializer()
+    film = FilmGeneralSerializer()
+    class Meta:
+        model = Session
+        fields = "__all__"

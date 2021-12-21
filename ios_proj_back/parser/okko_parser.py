@@ -10,21 +10,21 @@ def film_link(alias):
     return f"https://ctx.playfamily.ru/screenapi/v1/noauth/moviecard/web/1?elementAlias={alias}&elementType=MOVIE"
 
 def find_genre(title):
-    genre_exist = requests.get('http://localhost:8000/films/1/genres/')
+    genre_exist = requests.get('http://23.111.122.219:8000/films/1/genres/')
 
     for e in genre_exist.json():
         if(e['title_ru'] == title):
             return e['id']
 
 def find_country(name):
-    data = requests.get('http://localhost:8000/films/1/country/')
+    data = requests.get('http://23.111.122.219:8000/films/1/country/')
 
     for e in data.json():
         if(e['name'] == name):
             return e['id']
 
 def find_user(name, type):
-    data = requests.get(f'http://localhost:8000/films/1/{type}/')
+    data = requests.get(f'http://23.111.122.219:8000/films/1/{type}/')
 
     for e in data.json():
         if(e['name'] == name):
@@ -37,6 +37,7 @@ def getNormalURL(trailer):
 
 res = requests.get(url_list)
 
+count=12
 for i in res.json()['element']['collectionItems']['items']:
     film = i['element']
     if(film['type'] == "MOVIE"):
@@ -65,7 +66,7 @@ for i in res.json()['element']['collectionItems']['items']:
         trailer_data = {
             "trailer_url": finalurl
         }
-        trailer_data = requests.post('http://localhost:8000/films/1/trailer/', data=trailer_data)
+        trailer_data = requests.post('http://23.111.122.219:8000/films/1/trailer/', data=trailer_data)
         trailers.append(trailer_data.json()['id'])
 
         for country in film_detail['countries']['items']:
@@ -78,7 +79,7 @@ for i in res.json()['element']['collectionItems']['items']:
             if(id):
                 countries.append(id)    
             else:
-                countries_data = requests.post('http://localhost:8000/films/1/country/', data)
+                countries_data = requests.post('http://23.111.122.219:8000/films/1/country/', data)
                 countries.append(countries_data.json()['id'])
 
         for director in film_detail['directors']['items']:
@@ -94,7 +95,7 @@ for i in res.json()['element']['collectionItems']['items']:
             if(id):
                 directors.append(id)    
             else:
-                directors_data = requests.post('http://localhost:8000/films/1/director/', data)
+                directors_data = requests.post('http://23.111.122.219:8000/films/1/director/', data)
                 directors.append(directors_data.json()['id'])
 
         for genre in film_detail['genres']['items']:
@@ -106,7 +107,7 @@ for i in res.json()['element']['collectionItems']['items']:
             if(id):
                 genres.append(id)
             else:
-                new_genre = requests.post('http://localhost:8000/films/1/genres/', data=new_genre_data)
+                new_genre = requests.post('http://23.111.122.219:8000/films/1/genres/', data=new_genre_data)
                 genres.append(new_genre.json()['id'])
 
         for actor in film_detail['actors']['items']:
@@ -121,7 +122,7 @@ for i in res.json()['element']['collectionItems']['items']:
             if(id):
                 actors.append(id)    
             else:
-                actors_data = requests.post('http://localhost:8000/films/1/actor/', data)
+                actors_data = requests.post('http://23.111.122.219:8000/films/1/actor/', data)
                 actors.append(actors_data.json()['id'])
 
         
@@ -145,6 +146,6 @@ for i in res.json()['element']['collectionItems']['items']:
             "trailers": trailers,            
         }
         print(film_detail)
-        create_film = requests.post('http://localhost:8000/films/', data=film_data)
+        create_film = requests.post('http://23.111.122.219:8000/films/', data=film_data)
 
         print(create_film.json())

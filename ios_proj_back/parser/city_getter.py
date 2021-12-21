@@ -285,7 +285,7 @@ for i in range(len(cities)):
         "order": cities[i]['order']
     }
 
-    response = requests.post('http://23.111.122.219:8000/cinema/cities/', data=city_data)
+    response = requests.post('http://localhost:8000/cinema/cities/', data=city_data)
     
     # print(data['result'][0]['name'])
     city_id = response.json()
@@ -313,7 +313,7 @@ for i in range(len(cities)):
             "city": city_id['id']
         }
 
-        response = requests.post('http://23.111.122.219:8000/cinema/', data=req_data)
+        response = requests.post('http://localhost:8000/cinema/', data=req_data)
 
 # address: "Самал-2, д. 111, уг.ул. Жолдасбекова, ТРЦ «Достык Плаза», "
 # # big_poster: "https://cdn.kino.kz/cinema/119/p1000x1000.jpg"

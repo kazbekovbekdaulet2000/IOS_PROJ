@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'cinema',
     'ticket',
     'films',
+    'order',
 
 
     'debug_toolbar',

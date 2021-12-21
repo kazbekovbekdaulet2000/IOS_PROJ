@@ -6,7 +6,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from films.models import Actor, County, Director, Film, Genres, Trailer
-from films.serializers import ActorSerializer, CountrySerializer, DirectorSerializer, FilmCreateSerializer, FilmGeneralSerializer, FilmTrailerSerializer, GenresSerializer
+from films.serializers import ActorSerializer, CountrySerializer, DirectorSerializer, FilmCreateSerializer, FilmDetailSerializer, FilmGeneralSerializer, FilmTrailerSerializer, GenresSerializer
 
 # Create your views here.
 
@@ -30,7 +30,7 @@ class FilmList(generics.ListCreateAPIView):
 
 class FilmDetail(generics.RetrieveAPIView):
     lookup_field = 'id'
-    serializer_class = FilmGeneralSerializer
+    serializer_class = FilmDetailSerializer
     permission_classes = [permissions.AllowAny]
     queryset = Film.objects.all()
 

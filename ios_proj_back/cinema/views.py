@@ -11,8 +11,9 @@ class CinemaList(generics.ListCreateAPIView):
     serializer_class = serializers.CinemaSerializer
     queryset = Cinema.objects.all()
     permission_classes = [permissions.AllowAny]
-    filter_backends = [filters.SearchFilter, DjangoFilterBackend, filters.OrderingFilter]
-    ordering_fields = ['city',]
+    filter_backends = [filters.SearchFilter,
+                       DjangoFilterBackend, filters.OrderingFilter]
+    ordering_fields = ['city', ]
     search_fields = ['name', 'city']
     filterset_fields = ['city']
 
@@ -28,4 +29,3 @@ class CityList(generics.ListCreateAPIView):
     serializer_class = serializers.CitySerializer
     queryset = City.objects.all()
     permission_classes = [permissions.AllowAny]
-    
