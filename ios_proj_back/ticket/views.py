@@ -58,11 +58,15 @@ class SeatsView(generics.ListCreateAPIView):
         return {}
 
 
-class SessionsView(generics.ListAPIView):
-    serializer_class = serializers.SessionsSerializer
+class SessionsView(generics.ListCreateAPIView):
     permission_classes = [permissions.AllowAny]
-    pagination_class = None
 
     def get_queryset(self):
         now_date = datetime.now()+timedelta(hours=6)
         return Session.objects.filter(cinema_id=self.kwargs['cinema_id'], time__gte=now_date)
+
+
+    def get_serializer_class(self):
+        if self.request.method == "POST":
+            return serializers.SessionCreateSerializer
+        return serializers.SessionsSerializer

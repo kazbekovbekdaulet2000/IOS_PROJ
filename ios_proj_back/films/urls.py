@@ -17,6 +17,5 @@ urlpatterns = [
     path('<id>/actor/', ActorView.as_view()),
     path('<id>/director/', DirectorView.as_view()),
     path('<id>/country/', CountryView.as_view()),
-
     path('<id>/genres/', GenreList.as_view()),
 ]

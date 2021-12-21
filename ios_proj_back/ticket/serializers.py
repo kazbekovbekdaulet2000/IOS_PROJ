@@ -60,3 +60,9 @@ class SessionsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Session
         fields = "__all__"
+
+
+class SessionCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Session
+        exclude = ['id', 'created_at', 'updated_at']

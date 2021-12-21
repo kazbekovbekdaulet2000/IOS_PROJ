@@ -35,5 +35,5 @@ for hall in halls:
         "cinema": cinema_id
     }
     print(hall['name'])
-    requests.post(f'http://23.111.122.219:8000/cinema/{cinema_id}/halls/', data=hall_data)
+    requests.post(f'http://localhost:8000/cinema/{cinema_id}/halls/', data=hall_data)
     number+=1
