@@ -33,14 +33,18 @@ class HallView(generics.ListCreateAPIView):
     def get_queryset(self):
         session = get_object_or_404(Session, id=self.kwargs['session_id'])
         for i in Hall.objects.filter(cinema_id=self.kwargs['cinema_id']):
-            if int(i.hall_no) == int(session.hall.id):
+            if int(i.id) == int(session.hall.id):
                 return Row.objects.filter(hall_id=i.id)
         return {}
+
+class RowCreateView(generics.CreateAPIView):
+    serializer_class = serializers.RowSerializer
+    permission_classes = [permissions.AllowAny]
 
 
 class SeatsView(generics.ListCreateAPIView):
     serializer_class = serializers.SeatSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.AllowAny]
     pagination_class = None
 
     def get_queryset(self):
