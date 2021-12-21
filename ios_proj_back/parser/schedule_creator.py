@@ -395,7 +395,7 @@ counter = 0
 
 cinema_id = 11
 
-hall_id = 1
+hall_id = 2
 
 for i in range(len(schedule)):
     row_no = i+1

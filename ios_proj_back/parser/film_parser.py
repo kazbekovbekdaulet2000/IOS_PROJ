@@ -83,6 +83,7 @@ for film in response.json()['result']:
         "finish_date": "",
         "genres": genres
     }
+    
     # if(find_film(film['name_rus']) == False):
     create_film = requests.post('http://23.111.122.219:8000/films/', data=film_data)
 
