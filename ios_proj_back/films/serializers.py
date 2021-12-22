@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from cinema.serializers import CinemaSerializer
 from films.models import Actor, County, Director, Film, Genres, Trailer
-from ticket.models import Session
+from ticket.models import Hall, Session
 
 class FilmTrailerSerializer(serializers.ModelSerializer):
     class Meta:
@@ -62,3 +62,15 @@ class FilmCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Film
         exclude = ['created_at', 'updated_at']
+
+class HallSerializer2(serializers.ModelSerializer):
+    class Meta:
+        model = Hall
+        fields = "__all__"
+
+class SessionsSerializer2(serializers.ModelSerializer):
+    hall = HallSerializer2()
+    cinema = CinemaSerializer()
+    class Meta:
+        model = Session
+        fields = "__all__"

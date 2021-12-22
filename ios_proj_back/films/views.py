@@ -1,13 +1,13 @@
 from django.shortcuts import render
-from rest_framework import generics, permissions, pagination, status
-
+from rest_framework import generics, permissions, pagination, serializers, status
+from datetime import datetime, timedelta
 from rest_framework import filters
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from films.models import Actor, County, Director, Film, Genres, Trailer
-from films.serializers import ActorSerializer, CountrySerializer, DirectorSerializer, FilmCreateSerializer, FilmDetailSerializer, FilmGeneralSerializer, FilmTrailerSerializer, GenresSerializer
-
+from films.serializers import ActorSerializer, CountrySerializer, DirectorSerializer, FilmCreateSerializer, FilmDetailSerializer, FilmGeneralSerializer, FilmTrailerSerializer, GenresSerializer, SessionsSerializer2
+from ticket.models import Session
 # Create your views here.
 
 
@@ -76,3 +76,12 @@ class CountryView(generics.ListCreateAPIView):
     queryset = County.objects.all()
     permission_classes = [permissions.AllowAny]
     pagination_class = None
+
+class FilmSessions(generics.ListAPIView):
+    serializer_class = SessionsSerializer2
+    permission_classes = [permissions.AllowAny]
+    pagination_class = None
+
+    def get_queryset(self):
+        now_date = datetime.now()+timedelta(hours=6)
+        return Session.objects.filter(film_id = self.kwargs['id'], time__gte=now_date)

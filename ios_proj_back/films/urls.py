@@ -7,12 +7,14 @@ from films.views import (
     GenreList, 
     FilmTrailer,
     GenreSearch,
+    FilmSessions,
     ActorView
 )
 
 urlpatterns = [
     path('', FilmList.as_view()),
     path('<id>/', FilmDetail.as_view()),
+    path('<id>/sessions/', FilmSessions.as_view()),
     path('<id>/trailer/', FilmTrailer.as_view()),
     path('<id>/actor/', ActorView.as_view()),
     path('<id>/director/', DirectorView.as_view()),

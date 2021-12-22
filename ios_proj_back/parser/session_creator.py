@@ -25,17 +25,13 @@ res = requests.get('https://kino.kz/api/movie/sessions', headers=headers, params
 
 sessions = res.json()['result']['sessions']
 
-halls = requests.get('http://localhost:8000/cinema/11/halls/')
-
-
 for i in sessions:
   session = i['session']
 
   hall = i['hall']['hall_order']+1
 
-  hall = hall + 2
-  if hall >= 13:
-    hall = 3
+  if hall >= 10:
+    hall = 1
    
   data={
     "time": session["session_date_tz"],
@@ -46,6 +42,4 @@ for i in sessions:
     "hall": hall
   }
 
-  res_data = requests.post('http://localhost:8000/cinema/11/sessions/', data)
-
-  # print(res_data.json())
+  res_data = requests.post('http://23.111.122.219:8000/cinema/11/sessions/', data)

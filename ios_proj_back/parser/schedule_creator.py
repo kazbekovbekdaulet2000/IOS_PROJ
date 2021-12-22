@@ -395,35 +395,36 @@ counter = 0
 
 cinema_id = 11
 
-hall_id = 1
+# hall_id = 2
 
-for i in range(len(schedule)):
-    row_no = i+1
-    row_data = {
-        "row_no": row_no,
-        "hall": hall_id
-    }
-    responce = requests.post(
-        f'http://23.111.122.219:8000/cinema/{cinema_id}/halls/{hall_id}/', data=row_data)
-    row_id = responce.json()['id']
-    for j in range(len(schedule[i])):
-        empty=False
-        if schedule[i][j]['vis']:
-            counter += 1
-        else:
-          empty=True
+for hall_id in range(3, 11):
+  print(hall_id)
+  for i in range(len(schedule)):
+      row_no = i+1
+      row_data = {
+          "row_no": row_no,
+          "hall": hall_id
+      }
+      responce = requests.post(
+          f'http://23.111.122.219:8000/cinema/{cinema_id}/halls/{hall_id}/', data=row_data)
+      row_id = responce.json()['id']
+      print(row_id)
+      for j in range(len(schedule[i])):
+          empty=False
+          if schedule[i][j]['vis']:
+              counter += 1
+          else:
+            empty=True
 
-        seat_data = {
-            "number": counter,
-            "symbol": "",
-            "picked": False,
-            "price_reg": 2400,
-            "price_stud": 1960,
-            "empty": empty,
-            "row": row_id
-        }
+          seat_data = {
+              "number": counter,
+              "symbol": "",
+              "picked": False,
+              "price_reg": 2400,
+              "price_stud": 1960,
+              "empty": empty,
+              "row": row_id
+          }
 
-        responce = requests.post(
-            f'http://23.111.122.219:8000/cinema/{cinema_id}/halls/{hall_id}/rows/', data=seat_data)
-
-        print(responce.json())
+          responce = requests.post(
+              f'http://23.111.122.219:8000/cinema/{cinema_id}/halls/{hall_id}/rows/', data=seat_data)

@@ -1,5 +1,4 @@
 from datetime import datetime, timedelta
-from re import S
 from cinema.models import Cinema
 from .models import Row, Seat, Hall, Session
 from . import serializers
