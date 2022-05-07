@@ -41,5 +41,3 @@ jobs:
       run: |
         python ios_proj_back/manage.py makemigrations
         python ios_proj_back/manage.py migrate
-    - name: run
-      run: python ios_proj_back/manage.py runserver
