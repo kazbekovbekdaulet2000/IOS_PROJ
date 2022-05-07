@@ -8,7 +8,7 @@ coreapi==2.3.3
 coreschema==0.0.4
 da-vinci==0.3.0
 Deprecated==1.2.13
-Django==4.0
+Django
 django-cors-headers==3.10.1
 django-debug-toolbar==3.2.4
 django-filter==21.1
